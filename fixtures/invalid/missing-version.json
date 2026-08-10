@@ -1,0 +1,7 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "project": {
+    "name": "missing-version"
+  },
+  "commands": {}
+}

@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ai-json.org/schema/v1.json",
+  "title": "ai.json v1",
+  "description": "Schema for ai.json v1 project contracts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "project", "commands"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "const": "https://ai-json.org/schema/v1.json"
+    },
+    "version": {
+      "type": "integer",
+      "const": 1
+    },
+    "project": {
+      "type": "object",
+      "$comment": "Closed for v1 predictability. Future nested extension requires a new ai.json version.",
+      "additionalProperties": false,
+      "properties": {
+        "name": { "type": "string" },
+        "type": { "type": "string" }
+      }
+    },
+    "commands": {
+      "type": "object",
+      "$comment": "Command keys are intentionally open so projects can define custom commands.",
+      "propertyNames": {
+        "type": "string",
+        "minLength": 1
+      },
+      "additionalProperties": {
+        "type": "string",
+        "minLength": 1
+      }
+    },
+    "context": {
+      "type": "object",
+      "$comment": "Closed for v1 predictability. Context supports only standard resource pointers.",
+      "additionalProperties": false,
+      "properties": {
+        "agents": { "$ref": "#/$defs/relativeProjectPath" },
+        "architecture": { "$ref": "#/$defs/relativeProjectPath" },
+        "docs": { "$ref": "#/$defs/relativeProjectPath" },
+        "source": { "$ref": "#/$defs/relativeProjectPath" },
+        "tests": { "$ref": "#/$defs/relativeProjectPath" }
+      }
+    },
+    "permissions": {
+      "type": "object",
+      "$comment": "Closed for v1 predictability. New permission dimensions require a new ai.json version.",
+      "additionalProperties": false,
+      "properties": {
+        "filesystem": {
+          "type": "string",
+          "enum": ["none", "read", "workspace"]
+        },
+        "network": {
+          "type": "boolean"
+        }
+      }
+    },
+    "quality": {
+      "type": "object",
+      "$comment": "Closed for v1 predictability. required values are not enumerated because projects may define custom commands.",
+      "additionalProperties": false,
+      "properties": {
+        "required": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  },
+  "$defs": {
+    "relativeProjectPath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?![A-Za-z][A-Za-z0-9+.-]*:)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    }
+  }
+}

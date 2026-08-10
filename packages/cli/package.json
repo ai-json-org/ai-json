@@ -1,0 +1,29 @@
+{
+  "name": "@ai-json/cli",
+  "version": "0.1.0",
+  "description": "Command-line tools for ai.json contracts.",
+  "license": "MIT",
+  "bin": {
+    "ai-json": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "dependencies": {
+    "@ai-json/core": "workspace:*",
+    "ajv": "^8.20.0"
+  }
+}

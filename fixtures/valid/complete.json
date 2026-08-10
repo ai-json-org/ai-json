@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "complete-app",
+    "type": "web-app"
+  },
+  "commands": {
+    "dev": "pnpm dev",
+    "build": "pnpm build",
+    "test": "pnpm test",
+    "lint": "pnpm lint",
+    "typecheck": "pnpm typecheck"
+  },
+  "context": {
+    "agents": "AGENTS.md",
+    "architecture": "ARCHITECTURE.md",
+    "docs": "docs/",
+    "source": "src/",
+    "tests": "tests/"
+  },
+  "permissions": {
+    "filesystem": "workspace",
+    "network": true
+  },
+  "quality": {
+    "required": ["lint", "typecheck", "test", "build"]
+  }
+}

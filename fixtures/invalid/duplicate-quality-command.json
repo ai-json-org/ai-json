@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "duplicate-quality-command"
+  },
+  "commands": {
+    "test": "pnpm test"
+  },
+  "quality": {
+    "required": ["test", "test"]
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "no-network"
+  },
+  "commands": {
+    "test": "pnpm test"
+  },
+  "permissions": {
+    "filesystem": "read",
+    "network": false
+  }
+}

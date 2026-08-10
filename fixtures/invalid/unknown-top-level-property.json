@@ -1,0 +1,9 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "unknown-top-level-property"
+  },
+  "commands": {},
+  "prompt": "Do not allow prompt-like top-level fields."
+}

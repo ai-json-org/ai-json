@@ -1,0 +1,19 @@
+{
+  "ignorePatterns": [
+    "node_modules/**",
+    "dist/**",
+    "coverage/**",
+    "agent-dataset/**",
+    "devjobs/**",
+    "editable.ts/**",
+    "foosball-analytics/**",
+    "kamod-*/**",
+    "otok/**",
+    "pi-agent-lab/**",
+    "preacthub/**",
+    "preactpress/**",
+    "racunbox/**",
+    "tmp/**",
+    "website/**"
+  ]
+}

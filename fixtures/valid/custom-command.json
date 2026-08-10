@@ -1,0 +1,13 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "custom-command"
+  },
+  "commands": {
+    "verify:api": "pnpm verify:api"
+  },
+  "quality": {
+    "required": ["verify:api"]
+  }
+}

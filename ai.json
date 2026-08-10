@@ -1,0 +1,36 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "ai.json",
+    "type": "library"
+  },
+  "commands": {
+    "build": "pnpm build",
+    "check": "pnpm lint && pnpm format:check && pnpm typecheck && pnpm test && pnpm build",
+    "format": "pnpm format",
+    "format:check": "pnpm format:check",
+    "lint": "pnpm lint",
+    "test": "pnpm test",
+    "typecheck": "pnpm typecheck"
+  },
+  "context": {
+    "agents": "AGENTS.md",
+    "architecture": "ARCHITECTURE.md",
+    "docs": "docs/",
+    "source": "packages/",
+    "tests": "packages/"
+  },
+  "permissions": {
+    "filesystem": "workspace",
+    "network": false
+  },
+  "quality": {
+    "required": [
+      "lint",
+      "typecheck",
+      "test",
+      "build"
+    ]
+  }
+}

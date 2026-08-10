@@ -1,0 +1,29 @@
+{
+  "name": "ai-json-monorepo",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Open standard and tooling for ai.json project contracts.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "pnpm -r exec rm -rf dist tsconfig.tsbuildinfo",
+    "format": "oxfmt README.md CONTRIBUTING.md AGENTS.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .github/workflows/ci.yml --write",
+    "format:check": "oxfmt README.md CONTRIBUTING.md AGENTS.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .github/workflows/ci.yml --check",
+    "lint": "oxlint packages",
+    "test": "vitest run",
+    "typecheck": "tsc -b --pretty false"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "ajv": "^8.20.0",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "typescript": "^5.9.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "packageManager": "pnpm@10.0.0"
+}

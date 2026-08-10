@@ -1,0 +1,22 @@
+{
+  "name": "@ai-json/core",
+  "version": "0.1.0",
+  "description": "Core types, parsing, validation, and normalization for ai.json.",
+  "license": "MIT",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -b",
+    "test": "vitest run",
+    "typecheck": "tsc -b --pretty false"
+  }
+}

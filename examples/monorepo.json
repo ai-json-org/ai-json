@@ -1,0 +1,29 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "example-monorepo",
+    "type": "monorepo"
+  },
+  "commands": {
+    "build": "pnpm build",
+    "test": "pnpm test",
+    "lint": "pnpm lint",
+    "typecheck": "pnpm typecheck",
+    "format:check": "pnpm format:check"
+  },
+  "context": {
+    "agents": "AGENTS.md",
+    "architecture": "docs/architecture.md",
+    "docs": "docs/",
+    "source": "packages/",
+    "tests": "fixtures/"
+  },
+  "permissions": {
+    "filesystem": "workspace",
+    "network": false
+  },
+  "quality": {
+    "required": ["lint", "format:check", "typecheck", "test", "build"]
+  }
+}
