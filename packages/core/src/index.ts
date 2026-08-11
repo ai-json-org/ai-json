@@ -8,7 +8,9 @@ export {
 export { findAiJson, loadAiJson } from "./fs.js";
 export { normalizeAiJson } from "./normalize.js";
 export { parseAiJson } from "./parse.js";
+export { aiJsonSchema, loadAiJsonSchema } from "./schema.js";
 export { validateAiJson } from "./validate.js";
+export type { JsonSchema } from "./schema.js";
 export type {
   AnalyzeAiJsonReadinessOptions,
   AiJsonReadinessResult,

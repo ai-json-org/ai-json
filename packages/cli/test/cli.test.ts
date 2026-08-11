@@ -1,7 +1,9 @@
+/* eslint-disable no-await-in-loop */
 import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { validateAiJson } from "@ai-json-spec/core";
 import { main } from "../src/index.js";
 
 let cwd: string | undefined;
@@ -24,7 +26,7 @@ afterEach(async () => {
   }
 });
 
-describe("@ai-json/cli validate", () => {
+describe("@ai-json-spec/cli validate", () => {
   it("locates ai.json upward and reports success", async () => {
     cwd = await mkdtemp(join(tmpdir(), "ai-json-"));
     const nested = join(cwd, "a", "b");
@@ -152,9 +154,35 @@ describe("@ai-json/cli validate", () => {
     });
     expect(logOutput()).not.toContain("✗");
   });
+
+  it("matches core validation validity for representative documents", async () => {
+    cwd = await mkdtemp(join(tmpdir(), "ai-json-"));
+    const documents = [
+      { version: 1, project: {}, commands: {} },
+      { version: 1, project: {}, commands: { "format:check": "pnpm format:check" } },
+      { version: 1, project: {}, commands: { "format check": "pnpm format:check" } },
+      { version: 1, project: {}, commands: {}, prompt: "not allowed" },
+      {
+        version: 1,
+        project: {},
+        commands: { test: "pnpm test" },
+        quality: { required: ["missing"] },
+      },
+    ];
+
+    for (const [index, document] of documents.entries()) {
+      logSpy.mockClear();
+      errorSpy.mockClear();
+      const file = join(cwd, `case-${index}.json`);
+      await writeFile(file, JSON.stringify(document), "utf8");
+
+      const exitCode = await main(["validate", file, "--json"]);
+      expect(exitCode === 0, `CLI case ${index}`).toBe(validateAiJson(document).valid);
+    }
+  });
 });
 
-describe("@ai-json/cli check", () => {
+describe("@ai-json-spec/cli check", () => {
   it("runs required quality gates in declared order", async () => {
     cwd = await mkdtemp(join(tmpdir(), "ai-json-"));
     process.chdir(cwd);
@@ -256,7 +284,7 @@ describe("@ai-json/cli check", () => {
   });
 });
 
-describe("@ai-json/cli doctor", () => {
+describe("@ai-json-spec/cli doctor", () => {
   it("prints repository readiness without changing files", async () => {
     cwd = await mkdtemp(join(tmpdir(), "ai-json-"));
     process.chdir(cwd);
@@ -304,7 +332,7 @@ describe("@ai-json/cli doctor", () => {
   });
 });
 
-describe("@ai-json/cli init", () => {
+describe("@ai-json-spec/cli init", () => {
   it("creates a conservative ai.json by inspecting an existing pnpm repository", async () => {
     cwd = await mkdtemp(join(tmpdir(), "ai-json-"));
     process.chdir(cwd);

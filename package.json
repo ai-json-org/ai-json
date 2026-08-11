@@ -6,15 +6,20 @@
   "license": "MIT",
   "type": "module",
   "scripts": {
-    "build": "tsc -b",
+    "build": "pnpm --filter @ai-json-spec/core build && pnpm --filter @ai-json-spec/cli build",
+    "changeset": "changeset",
+    "changeset:publish": "changeset publish --provenance",
+    "changeset:version": "changeset version",
     "clean": "pnpm -r exec rm -rf dist tsconfig.tsbuildinfo",
-    "format": "oxfmt README.md CONTRIBUTING.md AGENTS.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .github/workflows/ci.yml --write",
-    "format:check": "oxfmt README.md CONTRIBUTING.md AGENTS.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .github/workflows/ci.yml --check",
-    "lint": "oxlint packages",
+    "format": "oxfmt README.md CONTRIBUTING.md AGENTS.md CHANGELOG.md SECURITY.md ROADMAP.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .changeset .github/workflows --write",
+    "format:check": "oxfmt README.md CONTRIBUTING.md AGENTS.md CHANGELOG.md SECURITY.md ROADMAP.md specification schema examples packages fixtures docs scripts action.yml package.json tsconfig.json tsconfig.base.json vitest.config.ts .changeset .github/workflows --check",
+    "lint": "oxlint packages scripts",
+    "pack:test": "node scripts/pack-smoke-test.mjs",
     "test": "vitest run",
-    "typecheck": "tsc -b --pretty false"
+    "typecheck": "tsc -b tsconfig.json --pretty false"
   },
   "devDependencies": {
+    "@changesets/cli": "^3.0.0",
     "@types/node": "^24.0.0",
     "ajv": "^8.20.0",
     "oxfmt": "latest",

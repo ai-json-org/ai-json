@@ -1,8 +1,25 @@
 {
-  "name": "@ai-json/cli",
+  "name": "@ai-json-spec/cli",
   "version": "0.1.0",
-  "description": "Command-line tools for ai.json contracts.",
+  "description": "Command-line tools for validating ai.json manifests, reporting readiness, and running quality gates.",
+  "keywords": [
+    "ai-agents",
+    "ai-json",
+    "ai.json",
+    "cli",
+    "coding-agents",
+    "validation"
+  ],
+  "homepage": "https://github.com/ai-json-org/ai-json#readme",
+  "bugs": {
+    "url": "https://github.com/ai-json-org/ai-json/issues"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-json-org/ai-json.git",
+    "directory": "packages/cli"
+  },
   "bin": {
     "ai-json": "./dist/index.js"
   },
@@ -17,13 +34,19 @@
       "default": "./dist/index.js"
     }
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc -b",
     "test": "vitest run",
     "typecheck": "tsc -b --pretty false"
   },
   "dependencies": {
-    "@ai-json/core": "workspace:*",
+    "@ai-json-spec/core": "workspace:*",
     "ajv": "^8.20.0"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }

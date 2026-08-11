@@ -19,9 +19,9 @@ This repository contains the reference implementation for the `ai.json` standard
 ## Quick start
 
 ```sh
-npx ai-json init
-npx ai-json validate
-npx ai-json doctor
+npx @ai-json-spec/cli init
+npx @ai-json-spec/cli validate
+npx @ai-json-spec/cli doctor
 ```
 
 ## Links

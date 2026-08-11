@@ -1,77 +1,53 @@
+import { readFileSync } from "node:fs";
 import { readFile } from "node:fs/promises";
-import { AI_JSON_VERSION } from "./types.js";
+import { fileURLToPath } from "node:url";
 
 export type JsonSchema = Record<string, unknown>;
 
-export const embeddedAiJsonSchema: JsonSchema = {
-  $schema: "https://json-schema.org/draft/2020-12/schema",
-  $id: "https://ai-json.org/schema/v1.json",
-  title: "ai.json v1",
-  type: "object",
-  additionalProperties: false,
-  required: ["version", "project", "commands"],
-  properties: {
-    $schema: { type: "string", const: "https://ai-json.org/schema/v1.json" },
-    version: { type: "integer", const: AI_JSON_VERSION },
-    project: {
-      type: "object",
-      additionalProperties: false,
-      properties: { name: { type: "string" }, type: { type: "string" } },
-    },
-    commands: {
-      type: "object",
-      propertyNames: { type: "string", minLength: 1 },
-      additionalProperties: { type: "string", minLength: 1 },
-    },
-    context: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        agents: { $ref: "#/$defs/relativeProjectPath" },
-        architecture: { $ref: "#/$defs/relativeProjectPath" },
-        docs: { $ref: "#/$defs/relativeProjectPath" },
-        source: { $ref: "#/$defs/relativeProjectPath" },
-        tests: { $ref: "#/$defs/relativeProjectPath" },
-      },
-    },
-    permissions: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        filesystem: { type: "string", enum: ["none", "read", "workspace"] },
-        network: { type: "boolean" },
-      },
-    },
-    quality: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        required: { type: "array", items: { type: "string", minLength: 1 }, uniqueItems: true },
-      },
-    },
-  },
-  $defs: {
-    relativeProjectPath: {
-      type: "string",
-      minLength: 1,
-      pattern: "^(?!/)(?![A-Za-z][A-Za-z0-9+.-]*:)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
-    },
-  },
-};
+const packagedSchemaUrl = new URL("./schema/v1.json", import.meta.url);
+const workspaceSchemaUrl = new URL("../../../schema/v1.json", import.meta.url);
+
+export const aiJsonSchema = readSchemaSync();
 
 export async function loadAiJsonSchema(schemaPath?: string): Promise<JsonSchema> {
   if (schemaPath === undefined) {
-    return embeddedAiJsonSchema;
+    return structuredClone(aiJsonSchema);
   }
 
   const raw = await readFile(schemaPath, "utf8");
+  return parseSchema(raw, schemaPath);
+}
+
+function readSchemaSync(): JsonSchema {
+  const candidates = [packagedSchemaUrl, workspaceSchemaUrl];
+  for (const candidate of candidates) {
+    try {
+      return parseSchema(readFileSync(candidate, "utf8"), fileURLToPath(candidate));
+    } catch (error) {
+      if (!isNotFoundError(error)) {
+        throw error;
+      }
+    }
+  }
+  throw new Error("Could not find schema/v1.json.");
+}
+
+function parseSchema(raw: string, path: string): JsonSchema {
   const parsed: unknown = JSON.parse(raw);
   if (!isObject(parsed)) {
-    throw new Error(`Schema at ${schemaPath} must be a JSON object.`);
+    throw new Error(`Schema at ${path} must be a JSON object.`);
   }
   return parsed;
 }
 
 function isObject(value: unknown): value is JsonSchema {
   return typeof value === "object" && value !== null && !Array.isArray(value);
+}
+
+function isNotFoundError(error: unknown): boolean {
+  return isNodeError(error) && error.code === "ENOENT";
+}
+
+function isNodeError(error: unknown): error is NodeJS.ErrnoException {
+  return typeof error === "object" && error !== null && "code" in error;
 }

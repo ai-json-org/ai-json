@@ -23,7 +23,7 @@ Do not add MCP, model-provider integrations, telemetry, cloud services, or frame
 - `scripts/` contains integration helper scripts, including the GitHub Action runner.
 - `docs/` contains user-facing documentation.
 
-Keep parsing and validation logic in `@ai-json/core`. Keep CLI output, process exit codes, and terminal formatting in `@ai-json/cli`. Keep command execution isolated from parsing and validation code.
+Keep parsing and validation logic in `@ai-json-spec/core`. Keep CLI output, process exit codes, and terminal formatting in `@ai-json-spec/cli`. Keep command execution isolated from parsing and validation code.
 
 ## Development workflow
 
@@ -49,7 +49,7 @@ Specification changes must be made deliberately and narrowly.
 - Update `specification/v1.md` for normative behavior changes.
 - Update `schema/v1.json` when document validity changes.
 - Update examples and fixtures with every schema or semantic validation change.
-- Update `@ai-json/core` types and validators to match the specification.
+- Update `@ai-json-spec/core` types and validators to match the specification.
 - Do not add prompts, hidden instructions, vendor-specific fields, or framework-specific fields to `ai.json`.
 - Unknown-property behavior is part of compatibility and must not change casually.
 

@@ -1,7 +1,7 @@
 /* eslint-disable no-await-in-loop */
 import { spawn } from "node:child_process";
 import { dirname } from "node:path";
-import { findAiJson, parseAiJson, validateAiJson, type AiJson } from "@ai-json/core";
+import { findAiJson, parseAiJson, validateAiJson, type AiJson } from "@ai-json-spec/core";
 import { readFile } from "node:fs/promises";
 
 export interface CheckOptions {

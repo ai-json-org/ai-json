@@ -24,9 +24,9 @@ A small, boring, predictable project contract for AI coding agents.
 ## Get started
 
 ```sh
-npx ai-json init
-npx ai-json validate
-npx ai-json doctor
+npx @ai-json-spec/cli init
+npx @ai-json-spec/cli validate
+npx @ai-json-spec/cli doctor
 ```
 
 Learn more in the repository README and specification.

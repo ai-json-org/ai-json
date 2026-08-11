@@ -20,6 +20,7 @@ const contextKeys = new Set(["agents", "architecture", "docs", "source", "tests"
 const permissionKeys = new Set(["filesystem", "network"]);
 const qualityKeys = new Set(["required"]);
 const filesystemPermissions = new Set(["none", "read", "workspace"]);
+const commandNamePattern = /^[A-Za-z0-9_.:-]+$/;
 const pathPattern = /^(?!\/)(?![A-Za-z][A-Za-z0-9+.-]*:)(?!.*(?:^|\/)\.\.(?:\/|$)).+$/;
 
 export function validateAiJson(input: string | unknown): ValidationResult {
@@ -102,6 +103,14 @@ function validateCommands(value: unknown, issues: ValidationIssue[]): void {
   for (const [key, command] of sortedEntries(value)) {
     if (key.length === 0) {
       issues.push(createIssue("commands", "invalid_value", "Command key must be non-empty."));
+    } else if (!commandNamePattern.test(key)) {
+      issues.push(
+        createIssue(
+          `commands.${key}`,
+          "invalid_value",
+          "Command key may contain only ASCII letters, digits, _, -, ., and :.",
+        ),
+      );
     }
     if (typeof command !== "string") {
       issues.push(createIssue(`commands.${key}`, "invalid_type", "Expected command string."));

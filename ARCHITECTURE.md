@@ -5,9 +5,9 @@ This repository is organized as a reference implementation of the ai.json standa
 ```text
 schema
   ↓
-@ai-json/core
+@ai-json-spec/core
   ↓
-@ai-json/cli
+@ai-json-spec/cli
   ↓
 integrations
 ```
@@ -22,7 +22,7 @@ The schema layer contains the official JSON Schema for ai.json documents.
 
 The schema defines document shape. It does not execute commands, enforce sandboxes, or encode vendor-specific behavior.
 
-## @ai-json/core
+## @ai-json-spec/core
 
 `packages/core/` is the programmatic reference implementation.
 
@@ -38,7 +38,7 @@ Responsibilities:
 
 Core must not print to the console, call `process.exit`, or execute repository commands.
 
-## @ai-json/cli
+## @ai-json-spec/cli
 
 `packages/cli/` is the command-line interface.
 
@@ -52,7 +52,7 @@ Responsibilities:
 - JSON output for CI
 - process exit codes
 
-The CLI delegates parsing, validation, discovery, normalization, and scoring to `@ai-json/core`.
+The CLI delegates parsing, validation, discovery, normalization, and scoring to `@ai-json-spec/core`.
 
 Command execution for `ai-json check` is isolated in `packages/cli/src/check.ts` and only runs commands explicitly listed in `quality.required`.
 

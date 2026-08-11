@@ -1,8 +1,25 @@
 {
-  "name": "@ai-json/core",
+  "name": "@ai-json-spec/core",
   "version": "0.1.0",
-  "description": "Core types, parsing, validation, and normalization for ai.json.",
+  "description": "Core types, schema access, parsing, validation, loading, normalization, and readiness analysis for ai.json manifests.",
+  "keywords": [
+    "ai-agents",
+    "ai-json",
+    "ai.json",
+    "coding-agents",
+    "schema",
+    "validation"
+  ],
+  "homepage": "https://github.com/ai-json-org/ai-json#readme",
+  "bugs": {
+    "url": "https://github.com/ai-json-org/ai-json/issues"
+  },
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ai-json-org/ai-json.git",
+    "directory": "packages/core"
+  },
   "files": [
     "dist",
     "README.md"
@@ -12,11 +29,18 @@
     ".": {
       "types": "./dist/index.d.ts",
       "default": "./dist/index.js"
-    }
+    },
+    "./schema/v1.json": "./dist/schema/v1.json"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
-    "build": "tsc -b",
+    "build": "tsc -b && rm -rf dist/schema && mkdir -p dist/schema && cp ../../schema/v1.json dist/schema/v1.json",
     "test": "vitest run",
     "typecheck": "tsc -b --pretty false"
+  },
+  "engines": {
+    "node": ">=24.0.0"
   }
 }

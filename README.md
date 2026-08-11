@@ -1,6 +1,6 @@
 # ai.json
 
-`ai.json` is an open proposal for a machine-readable contract between repositories and AI coding agents.
+`ai.json` is an open draft specification for a machine-readable contract between repositories and AI coding agents.
 
 `package.json` tells tools how a JavaScript project works. `ai.json` tells AI agents how a software project works.
 
@@ -63,14 +63,22 @@ The goal is not to replace existing documentation or package metadata. The goal 
 ## Quick Start
 
 ```sh
-npx ai-json init
-npx ai-json validate
-npx ai-json doctor
+npx @ai-json-spec/cli init
+npx @ai-json-spec/cli validate
+npx @ai-json-spec/cli doctor
 ```
 
 `init` creates a conservative manifest from the current repository.
 
 `validate` checks that `ai.json` is valid.
+
+Later published CLI usage uses the `@ai-json-spec/cli` package while keeping the executable name `ai-json`:
+
+```sh
+npx @ai-json-spec/cli validate
+npx @ai-json-spec/cli doctor
+npx @ai-json-spec/cli check
+```
 
 `doctor` reports how ready the repository is for AI coding agents.
 
@@ -86,10 +94,10 @@ npx ai-json doctor
 
 ## Specification
 
-The current draft is v0.1:
+The current specification version is v1:
 
-- [Specification v0.1](./specification/v1.md)
-- [JSON Schema](./schema/v1.json)
+- [Specification v1](./specification/v1.md)
+- [JSON Schema v1](./schema/v1.json)
 
 ## Ecosystem
 
@@ -106,11 +114,11 @@ These integrations should not require vendor-specific fields in `ai.json`.
 
 ## Status
 
-`ai.json` v0.1 is experimental.
+`ai.json` package version `0.1.0` is a draft specification release.
 
-The format is intentionally small while the proposal is tested against real repositories and agent workflows. Feedback may change future versions.
+The format is intentionally small while the proposal is tested against real repositories and agent workflows. Breaking changes are possible before a future stable v1 standard.
 
-Do not treat this as an established standard yet.
+The specification is framework-neutral, agent-neutral, and provider-neutral. Do not treat this as an established standard yet.
 
 ## Contributing
 

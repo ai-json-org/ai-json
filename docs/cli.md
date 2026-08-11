@@ -1,7 +1,16 @@
 # CLI
 
-`@ai-json/cli` provides a minimal command-line interface:
+`@ai-json-spec/cli` provides a minimal command-line interface. The installed binary is `ai-json`.
 
-- `ai-json init [file]`: create an initial contract, defaulting to `ai.json`.
-- `ai-json validate [file]`: parse and validate a contract.
-- `ai-json doctor [file]`: validate the contract and check for companion `AGENTS.md` guidance.
+- `ai-json init [--dry-run] [--force]`: create an initial `ai.json` contract.
+- `ai-json validate [file] [--json]`: parse and validate a contract.
+- `ai-json doctor [--json]`: validate the contract and report AI-readiness.
+- `ai-json check [--continue] [--dry-run] [--json]`: execute commands listed in `quality.required`.
+
+Published package usage:
+
+```sh
+npx @ai-json-spec/cli validate
+npx @ai-json-spec/cli doctor
+npx @ai-json-spec/cli check
+```

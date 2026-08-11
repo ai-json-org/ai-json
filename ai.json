@@ -26,11 +26,6 @@
     "network": false
   },
   "quality": {
-    "required": [
-      "lint",
-      "typecheck",
-      "test",
-      "build"
-    ]
+    "required": ["lint", "typecheck", "test", "build"]
   }
 }

@@ -1,11 +1,12 @@
 #!/usr/bin/env node
-import { access, readFile, stat, writeFile } from "node:fs/promises";
+import { access, readFile, realpath, stat, writeFile } from "node:fs/promises";
 import { join, resolve } from "node:path";
 import { Ajv2020, type ErrorObject } from "ajv/dist/2020.js";
 import { runQualityCheck, type CheckOptions, type CheckResult } from "./check.js";
 import {
   AI_JSON_SCHEMA_URL,
   AI_JSON_VERSION,
+  aiJsonSchema,
   analyzeAiJsonReadiness,
   findAiJson,
   parseAiJson,
@@ -14,7 +15,7 @@ import {
   type AiJsonReadinessResult,
   type ReadinessCheck,
   type ValidationIssue,
-} from "@ai-json/core";
+} from "@ai-json-spec/core";
 
 interface InitOptions {
   dryRun: boolean;
@@ -374,7 +375,7 @@ async function validateFile(path: string): Promise<ValidateJsonOutput> {
 
 function validateAgainstOfficialSchema(input: unknown): CliDiagnostic[] {
   const ajv = new Ajv2020({ allErrors: true, strict: true });
-  const validateSchema = ajv.compile(officialSchema);
+  const validateSchema = ajv.compile(aiJsonSchema);
   if (validateSchema(input)) {
     return [];
   }
@@ -745,61 +746,13 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
 }
 
-const officialSchema = {
-  $schema: "https://json-schema.org/draft/2020-12/schema",
-  $id: AI_JSON_SCHEMA_URL,
-  type: "object",
-  additionalProperties: false,
-  required: ["version", "project", "commands"],
-  properties: {
-    $schema: { type: "string", const: AI_JSON_SCHEMA_URL },
-    version: { type: "integer", const: AI_JSON_VERSION },
-    project: {
-      type: "object",
-      additionalProperties: false,
-      properties: { name: { type: "string" }, type: { type: "string" } },
-    },
-    commands: {
-      type: "object",
-      propertyNames: { type: "string", minLength: 1 },
-      additionalProperties: { type: "string", minLength: 1 },
-    },
-    context: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        agents: { $ref: "#/$defs/relativeProjectPath" },
-        architecture: { $ref: "#/$defs/relativeProjectPath" },
-        docs: { $ref: "#/$defs/relativeProjectPath" },
-        source: { $ref: "#/$defs/relativeProjectPath" },
-        tests: { $ref: "#/$defs/relativeProjectPath" },
-      },
-    },
-    permissions: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        filesystem: { type: "string", enum: ["none", "read", "workspace"] },
-        network: { type: "boolean" },
-      },
-    },
-    quality: {
-      type: "object",
-      additionalProperties: false,
-      properties: {
-        required: { type: "array", items: { type: "string", minLength: 1 }, uniqueItems: true },
-      },
-    },
-  },
-  $defs: {
-    relativeProjectPath: {
-      type: "string",
-      minLength: 1,
-      pattern: "^(?!/)(?![A-Za-z][A-Za-z0-9+.-]*:)(?!.*(?:^|/)\\.\\.(?:/|$)).+$",
-    },
-  },
-};
+async function isCliEntrypoint(): Promise<boolean> {
+  if (process.argv[1] === undefined) {
+    return false;
+  }
+  return (await realpath(process.argv[1])) === (await realpath(new URL(import.meta.url)));
+}
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+if (await isCliEntrypoint()) {
   process.exitCode = await main();
 }

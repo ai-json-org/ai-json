@@ -30,7 +30,7 @@ afterEach(async () => {
   }
 });
 
-describe("@ai-json/core", () => {
+describe("@ai-json-spec/core", () => {
   it("parses a valid JSON string", () => {
     expect(parseAiJson(JSON.stringify(validContract))).toEqual(validContract);
   });
@@ -96,6 +96,60 @@ describe("@ai-json/core", () => {
       valid: false,
       issues: [{ path: "", code: "invalid_json", message: "Input is not valid JSON." }],
     });
+  });
+
+  it("accepts all specified command name characters", () => {
+    expect(
+      validateAiJson({
+        version: 1,
+        project: {},
+        commands: {
+          abc: "echo abc",
+          ABC: "echo ABC",
+          test_1: "echo test_1",
+          "format-check": "echo format-check",
+          "format.check": "echo format.check",
+          "format:check": "echo format:check",
+        },
+      }),
+    ).toEqual({ valid: true, issues: [] });
+  });
+
+  it("rejects command names outside the specified character set", () => {
+    expect(
+      validateAiJson({ version: 1, project: {}, commands: { "format check": "pnpm format" } }),
+    ).toEqual({
+      valid: false,
+      issues: [
+        {
+          path: "commands.format check",
+          code: "invalid_value",
+          message: "Command key may contain only ASCII letters, digits, _, -, ., and :.",
+        },
+      ],
+    });
+  });
+
+  it("rejects deprecated root fields as unknown properties", () => {
+    const deprecatedVersionKey = ["schema", "Version"].join("");
+    const result = validateAiJson({
+      [deprecatedVersionKey]: ["0", "1", "0"].join("."),
+      version: 1,
+      project: {},
+      commands: {},
+      repository: {},
+      paths: {},
+    });
+
+    expect(result.issues).toEqual([
+      { path: "paths", code: "unknown_property", message: "Unknown top-level property." },
+      { path: "repository", code: "unknown_property", message: "Unknown top-level property." },
+      {
+        path: deprecatedVersionKey,
+        code: "unknown_property",
+        message: "Unknown top-level property.",
+      },
+    ]);
   });
 
   it("normalizes optional fields and sorts deterministic collections", () => {

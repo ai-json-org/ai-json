@@ -1,0 +1,10 @@
+{
+  "$schema": "https://ai-json.org/schema/v1.json",
+  "version": 1,
+  "project": {
+    "name": "invalid-command-name"
+  },
+  "commands": {
+    "format check": "pnpm format:check"
+  }
+}
