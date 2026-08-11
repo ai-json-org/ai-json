@@ -1,90 +1,48 @@
-# GitHub positioning draft
+# GitHub positioning
 
 ## Summary
-Tightened the organization/profile copy to sound more technical and specific, and drafted repo-level positioning guidance for the main OSS projects.
 
-## Affected repositories
-- `kamod-ch/.github` (org profile README)
-- `kamod-ch/kamod-ui`
-- `kamod-ch/kamod-hooks`
-- `kamod-ch/kamod-signals` (not present in this workspace; included as a draft target)
-- `kamod-ch/preactpress`
+`ai.json` is an open, vendor-neutral standard for describing project metadata that AI coding agents need in order to work predictably.
 
-## Current problems
-- The existing hero copy is generic agency language.
-- The org page does not clearly say who the open-source projects are for.
-- Repo positioning is not yet differentiated by use case.
-- `kamod-signals` is referenced in the task but not present here, so it needs a separate pass when the repo is available.
+The positioning should emphasize boring interoperability over agent-specific features.
 
-## Concrete recommendations
+## Recommended description
 
-### Org/profile hero
-Use a short, concrete value statement:
-- `Practical software engineering for teams that need shipped work, not slideware.`
-- `We build custom web applications, cloud infrastructure, and security-minded systems for modern businesses.`
+Small, machine-readable project contracts for AI coding agents.
 
-### Repo descriptions
-Use the pattern:
-`<project type> for <specific use case> built with <stack>`
+## Recommended README hero
 
-Examples:
-- `Lightweight Preact UI components for product teams`
-- `Typed hooks for Preact applications`
-- `Signal-based state primitives for Preact apps`
-- `Static site generator for docs, blogs, and marketing sites`
+`ai.json` is an open proposal for a small, predictable, machine-readable contract between repositories and AI coding agents.
 
-### Suggested GitHub topics
+## Audience
+
+- maintainers who want AI agents to discover project commands safely
+- coding-agent developers who need consistent repository metadata
+- IDE and CI vendors that want a lightweight validation target
+- framework maintainers that generate starter projects
+
+## Messaging principles
+
+- Lead with interoperability and predictability.
+- Keep the standard vendor-neutral and framework-neutral.
+- Avoid positioning `ai.json` as a replacement for `README.md`, `AGENTS.md`, `package.json`, or CI config.
+- Avoid provider-specific claims or integrations.
+- Prefer concrete operational metadata over broad automation claims.
+
+## Suggested GitHub topics
+
+- `ai-json`
+- `coding-agents`
+- `developer-tools`
+- `json-schema`
+- `metadata`
+- `open-standard`
 - `typescript`
-- `preact`
-- `vite`
-- `hono`
-- `nextjs`
-- `django`
-- `postgresql`
-- `redis`
-- `docker`
-- `cloud-infrastructure`
-- `cybersecurity`
-- `internal-tools`
-- `static-site-generator`
+- `cli`
 
-### README hero guidance
-- Lead with the user problem, not the company.
-- Mention the stack only after the benefit.
-- Link demos, npm packages, or docs early.
-- Avoid claims that imply production maturity unless the repo proves it.
+## Verification checklist
 
-## Proposed repo-specific copy
-
-### kamod-ui
-- Description: `Lightweight Preact + Tailwind UI components for product teams`
-- Hero: `Reusable UI primitives and patterns for Preact apps`
-
-### kamod-hooks
-- Description: `Typed Preact hooks for shared app logic`
-- Hero: `Small hooks for data, UI state, and browser integration`
-
-### kamod-signals
-- Description: `Signal-based state primitives for Preact apps`
-- Hero: `Minimal state building blocks for reactive UIs`
-
-### preactpress
-- Description: `Static site generator for docs, blogs, and marketing sites`
-- Hero: `Build content sites with Preact, Vite, and Markdown`
-
-## Risks
-- Overly polished wording can sound like marketing instead of documentation.
-- If repo descriptions promise more than the code delivers, trust drops quickly.
-- Topics should match the actual codebase to avoid misleading discoverability.
-
-## How to test or verify
-- Read each README hero aloud as a new visitor would.
-- Check whether the first sentence answers: what is it, who is it for, why use it?
-- Compare descriptions against the current README/demo/npm/docs links.
-- Confirm each repo topic is backed by code and examples.
-
-## Next suggested tasks
-1. Apply repo descriptions in GitHub settings.
-2. Update the four repo README hero sections.
-3. Create 10 beginner-friendly issues across the repos.
-4. Draft a Show HN post and a daily.dev post from the same positioning language.
+- The first paragraph says what `ai.json` is.
+- The copy does not mention vendor-specific fields or integrations.
+- Examples remain framework-independent.
+- Claims match the implemented schema, CLI, and core package behavior.

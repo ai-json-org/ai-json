@@ -1,42 +1,32 @@
-# Kamod GmbH
+# ai.json
 
-Practical software engineering for teams that need shipped work, not slideware.
+`ai.json` is an open proposal for a small, machine-readable project contract for AI coding agents.
 
-We build custom web applications, cloud infrastructure, and security-minded systems for modern businesses.
+It helps repositories publish predictable operational metadata such as build commands, test commands, documentation locations, permissions, and required quality gates.
 
-**[www.kamod.ch](https://www.kamod.ch)**
+## Repository
 
-### What we do
+This repository contains the reference implementation for the `ai.json` standard:
 
-- **Custom Software Development** — web apps and internal tools tailored to real workflows
-- **Cloud Solutions** — infrastructure design, migration, and management on Hetzner Cloud
-- **Cybersecurity** — assessments and implementation work to reduce risk
-- **IT Consulting** — technical guidance for architecture, delivery, and platform choices
+- `specification/` — normative specification prose
+- `schema/` — official JSON Schemas
+- `examples/` — valid example manifests
+- `fixtures/` — validation fixtures
+- `packages/core/` — parsing, validation, discovery, normalization, and doctor scoring
+- `packages/cli/` — CLI commands and terminal output
+- `docs/` — user-facing documentation
 
-### SaaS
+## Quick start
 
-- [Syncding](https://www.syncding.com): managed Syncthing hub for syncing project files, Obsidian vaults, and team folders without running your own server. Syncding is a commercial SaaS product, not open source.
+```sh
+npx ai-json init
+npx ai-json validate
+npx ai-json doctor
+```
 
-### Open Source
+## Links
 
-We publish the tools we build and use when they’re useful to others:
-
-- [Kamod UI](https://github.com/kamod-ch/kamod-ui): lightweight Preact + Tailwind UI components — [ui.kamod.ch](https://ui.kamod.ch/) · [npm](https://www.npmjs.com/package/@kamod-ch/ui)
-- [PreactPress](https://github.com/kamod-ch/preactpress): Preact + Vite static site generator for docs, blogs, and marketing sites — [kamod-ch.github.io/preactpress](https://kamod-ch.github.io/preactpress/) · [npm](https://www.npmjs.com/package/@kamod-ch/preactpress)
-- [kamod-hooks](https://github.com/kamod-ch/kamod-hooks): Preact hooks library, structured like Kamod UI — [npm](https://www.npmjs.com/package/@kamod-ch/hooks)
-- [Kamod Icons](https://github.com/kamod-ch/kamod-icons): lightweight, tree-shakeable SVG icon components for Preact apps — [kamod-ch.github.io/kamod-icons](https://kamod-ch.github.io/kamod-icons/) · [npm](https://www.npmjs.com/package/@kamod-ch/icons)
-- [Kamod Signals](https://github.com/kamod-ch/kamod-signals): persisted Preact signals for localStorage, sessionStorage, IndexedDB, cookies, and memory — [kamod-ch.github.io/kamod-signals](https://kamod-ch.github.io/kamod-signals/) · [npm](https://www.npmjs.com/package/@kamod-ch/signals)
-- [editable.ts](https://github.com/watzak/editable.ts): lightweight, typed API for block-level `contenteditable` editing — [watzak.github.io/editable.ts](https://watzak.github.io/editable.ts/examples/) · [npm](https://www.npmjs.com/package/editable.ts)
-
-### Technologies we work with
-
-- [TypeScript](https://www.typescriptlang.org/), [Python](https://www.python.org/), [SQL](https://www.postgresql.org/docs/current/sql.html)
-- [Preact](https://preactjs.com/), [Tailwind CSS](https://tailwindcss.com/), [Vite](https://vite.dev/), [Hono](https://hono.dev/), [Next.js](https://nextjs.org/), [Django](https://www.djangoproject.com/)
-- [PostgreSQL](https://www.postgresql.org/), [Redis](https://redis.io/), [Docker](https://www.docker.com/)
-- ...
-
-### Get in touch
-
-Baarerstrasse 107 · 6300 Zug · Switzerland
-
-Visit [www.kamod.ch](https://www.kamod.ch) or write to [info@kamod.ch](mailto:info@kamod.ch).
+- Specification: [`specification/v1.md`](../specification/v1.md)
+- Schema: [`schema/v1.json`](../schema/v1.json)
+- CLI docs: [`docs/cli.md`](../docs/cli.md)
+- Contributing: [`CONTRIBUTING.md`](../CONTRIBUTING.md)
