@@ -1,0 +1,39 @@
+---
+title: Why ai.json
+description: Why repositories need a small, boring, machine-readable contract for AI coding agents.
+---
+
+## The problem
+
+AI coding agents rediscover the same project facts over and over:
+
+- build, test, lint, and typecheck commands
+- where source, tests, and docs live
+- intended filesystem and network boundaries
+- which checks must pass before work is complete
+
+Some of that information lives in `README.md`. Some is buried in CI. Some exists only as tribal knowledge. That makes agents slower and more likely to run the wrong command.
+
+## The separation
+
+`ai.json` separates human guidance from machine-readable metadata:
+
+- `AGENTS.md` — instructions and conventions for humans and LLMs
+- `ai.json` — structured contract for tools and agents
+- `README.md` — documentation for people
+- CI configuration — what automation actually executes
+
+The goal is not to replace existing docs. The goal is a small, boring file that answers basic operational questions in a consistent format.
+
+## Design principles
+
+- **Open** — developed as a public proposal, not tied to one vendor
+- **Agent-neutral** — no Cursor-, Claude Code-, Codex-, or Copilot-specific fields
+- **Framework-neutral** — works across languages and repository types
+- **Deterministic** — structured data with predictable validation
+- **Small** — only basic project facts belong in the file
+- **Secure by default** — commands are not automatically trusted; permissions describe intent, not sandbox enforcement
+
+## Status
+
+`ai.json` is an **experimental draft**. Feedback is welcome. Breaking changes are possible before a future stable v1 standard. Do not treat this as an established or production standard yet.

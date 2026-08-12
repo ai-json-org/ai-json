@@ -1,0 +1,220 @@
+@import "tailwindcss";
+@import "@kamod-ch/ui/theme.css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../../node_modules/@kamod-ch/ui/dist/**/*.{js,mjs}";
+@source "../components/**/*.{ts,tsx}";
+@source "../.preactpress/theme/**/*.{ts,tsx}";
+
+:root {
+  --brand: #f59e0b;
+  --brand-foreground: #1a1203;
+  --brand-hover: #d97706;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --primary-accent: var(--brand-hover);
+  --ring: var(--brand);
+  --docs-header-height: 3.5rem;
+  --docs-sidebar-width: 15rem;
+  --docs-outline-width: 13rem;
+  --docs-content-max: 44rem;
+  --docs-page-max: 72rem;
+  --font-sans: "IBM Plex Sans", "Segoe UI", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Code", "SF Mono", Menlo, monospace;
+}
+
+.dark {
+  --brand: #f59e0b;
+  --brand-foreground: #1a1203;
+  --brand-hover: #fbbf24;
+  --primary: var(--brand);
+  --primary-foreground: var(--brand-foreground);
+  --primary-accent: var(--brand-hover);
+  --ring: var(--brand);
+}
+
+@theme inline {
+  --color-brand: var(--brand);
+  --color-brand-foreground: var(--brand-foreground);
+  --color-brand-hover: var(--brand-hover);
+  --font-sans: var(--font-sans);
+  --font-mono: var(--font-mono);
+}
+
+html {
+  color-scheme: light;
+  scroll-behavior: smooth;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+.docs-skip-link {
+  position: absolute;
+  left: 1rem;
+  top: -100%;
+  z-index: 100;
+  border-radius: var(--radius);
+  background: var(--brand);
+  color: var(--brand-foreground);
+  padding: 0.5rem 0.75rem;
+  font-weight: 600;
+}
+
+.docs-skip-link:focus {
+  top: 1rem;
+}
+
+.docs-prose {
+  max-width: var(--docs-content-max);
+}
+
+.docs-prose :is(h2, h3, h4) {
+  scroll-margin-top: calc(var(--docs-header-height) + 1rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
+}
+
+.docs-prose h2 {
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.35rem;
+  line-height: 1.35;
+}
+
+.docs-prose h3 {
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+}
+
+.docs-prose h4 {
+  margin-top: 1.25rem;
+  margin-bottom: 0.4rem;
+  font-size: 1rem;
+}
+
+.docs-prose p,
+.docs-prose ul,
+.docs-prose ol {
+  margin: 0.85rem 0;
+  color: var(--muted-foreground);
+  line-height: 1.65;
+}
+
+.docs-prose li + li {
+  margin-top: 0.35rem;
+}
+
+.docs-prose a {
+  color: var(--brand-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.docs-prose :not(pre) > code {
+  border-radius: 0.35rem;
+  background: var(--muted);
+  padding: 0.1rem 0.35rem;
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--foreground);
+}
+
+.docs-prose pre {
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--muted);
+  padding: 1rem;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.docs-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.25rem 0;
+  font-size: 0.95rem;
+}
+
+.docs-prose th,
+.docs-prose td {
+  border: 1px solid var(--border);
+  padding: 0.65rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.docs-prose th {
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 600;
+}
+
+.hit-target {
+  min-width: 2.75rem;
+  min-height: 2.75rem;
+}
+
+.json-token-key {
+  color: #0f766e;
+}
+
+.json-token-string {
+  color: #b45309;
+}
+
+.json-token-number {
+  color: #1d4ed8;
+}
+
+.json-token-literal {
+  color: #7c3aed;
+}
+
+.dark .json-token-key {
+  color: #5eead4;
+}
+
+.dark .json-token-string {
+  color: #fbbf24;
+}
+
+.dark .json-token-number {
+  color: #93c5fd;
+}
+
+.dark .json-token-literal {
+  color: #c4b5fd;
+}

@@ -1,0 +1,83 @@
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10.0.0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build
+
+      - name: Lint docs
+        run: pnpm --filter @ai-json-spec/docs lint
+
+      - name: Format check docs
+        run: pnpm --filter @ai-json-spec/docs format:check
+
+      - name: Typecheck docs
+        run: pnpm --filter @ai-json-spec/docs typecheck
+
+      - name: Test docs
+        run: pnpm --filter @ai-json-spec/docs test
+
+      - name: Build docs site
+        run: pnpm docs:build
+
+      - name: Check docs site
+        run: pnpm --filter @ai-json-spec/docs check
+
+      - name: Verify published schema
+        run: |
+          cmp schema/v1.json packages/docs/dist/schema/v1.json
+          test -f packages/docs/dist/CNAME
+          grep -qx 'ai-json.org' packages/docs/dist/CNAME
+
+      - name: Upload Pages artifact
+        if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: packages/docs/dist
+
+  deploy:
+    if: github.ref == 'refs/heads/main' && (github.event_name == 'push' || github.event_name == 'workflow_dispatch')
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    permissions:
+      pages: write
+      id-token: write
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

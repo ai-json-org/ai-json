@@ -1,0 +1,30 @@
+---
+title: Security
+description: Security model for ai.json manifests, validation, and command execution.
+---
+
+## Treat manifests as untrusted input
+
+Every `ai.json` file is untrusted input. Parsing, validation, loading, normalization, and doctor analysis must not execute project commands.
+
+## Core rules
+
+- `ai.json` grants no permissions.
+- Commands declared in a repository are untrusted input until a consumer decides otherwise.
+- Consumer, sandbox, and organizational policies always win over manifest declarations.
+- Validation does not automatically execute commands.
+- `permissions` describes intended boundaries. It does not enforce sandboxing.
+
+## CLI execution
+
+`ai-json check` may execute commands listed in `quality.required`. That is trusted-code execution and should only be used for repositories you trust or inside an appropriate sandbox.
+
+`ai-json check` never executes commands outside `quality.required`, but every listed command is still arbitrary project code. Review manifests before running checks from untrusted repositories.
+
+## What does not belong in ai.json
+
+Do not place secrets, tokens, credentials, private paths, prompts, hidden instructions, or large documents in `ai.json`.
+
+## Reporting issues
+
+Report security issues privately through GitHub Security Advisories for the repository when available. See the repository [SECURITY.md](https://github.com/ai-json-org/ai-json/blob/main/SECURITY.md) for the current reporting process.

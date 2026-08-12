@@ -1,0 +1,39 @@
+{
+  "name": "@ai-json-spec/docs",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Official documentation and website for the ai.json open specification.",
+  "type": "module",
+  "scripts": {
+    "dev": "preactpress dev",
+    "build": "preactpress build",
+    "preview": "preactpress preview",
+    "check": "preactpress check",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "lint": "oxlint .",
+    "lint:fix": "oxlint --fix .",
+    "format": "oxfmt .",
+    "format:check": "oxfmt --check ."
+  },
+  "dependencies": {
+    "@ai-json-spec/core": "workspace:*",
+    "@kamod-ch/icons": "^1.0.3",
+    "@kamod-ch/themes": "^0.2.1",
+    "@kamod-ch/ui": "^1.1.0",
+    "@preact/signals": "^2.11.0",
+    "preact": "^10.29.8"
+  },
+  "devDependencies": {
+    "@kamod-ch/preactpress": "^2.2.1",
+    "@tailwindcss/vite": "^4.3.3",
+    "@types/node": "^24.0.0",
+    "ajv": "^8.20.0",
+    "oxfmt": "latest",
+    "oxlint": "latest",
+    "tailwindcss": "^4.3.3",
+    "typescript": "^5.9.0",
+    "vite": "^8.2.1",
+    "vitest": "^4.0.0"
+  }
+}
